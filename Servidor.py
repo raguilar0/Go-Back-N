@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
  
-# Programa Servidor
+# Programa Servidor prueb
 # Fuente original de este codigo: www.pythondiario.com
 # Utilizado para fines academicos en el curso CI-1320 
 
