@@ -10,6 +10,8 @@
 
 import socket
 import sys
+from subprocess import check_output
+
  
 # Creando un socket TCP/IP
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,13 +26,18 @@ server_address = ('localhost', puertoCliente)
 print >>sys.stderr, 'conectando a %s puerto %s' % server_address
 sock.connect(server_address)
 
+def wc(filename):   
+    return int(check_output(["wc", "-m", filename]).split()[0])
+
 try:
      
     # Enviando datos
     archivo = open(nombreArchivo)
     linea = archivo.read(1)
     contador = 0
-    while ((linea != '') & (contador < ventana)):
+    letras = wc(nombreArchivo)
+    print letras
+    while ((linea != '')):
         tamLinea = len(linea)
         for i in range (0, ventana):
             pos = str(contador)
@@ -48,10 +55,10 @@ try:
  
     # Buscando respuesta
     amount_received = 0
-    amount_expected = len(message)
+    amount_expected = letras*8
      
     while amount_received < amount_expected:
-        data = sock.recv(19)
+        data = sock.recv(8)
         amount_received += len(data)
         print >>sys.stderr, 'recibiendo "%s"' % data
  
