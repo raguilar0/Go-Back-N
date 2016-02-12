@@ -28,15 +28,23 @@ try:
      
     # Enviando datos
     archivo = open(nombreArchivo)
-    linea = archivo.readline()
-    while linea != '':
+    linea = archivo.read(1)
+    contador = 0
+    while ((linea != '') & (contador < ventana)):
         tamLinea = len(linea)
-        for i in range (0, tamLinea-1):
-            caracter = linea[i]
-            message = '#"%d":"%s"' % (i, caracter)
-            print >>sys.stderr, 'enviando "%s"' % message
+        for i in range (0, ventana):
+            pos = str(contador)
+            lenpos = len(pos)
+            while lenpos < 5:
+                pos = '0'+pos
+                lenpos = len(pos)
+            pba = int(pos)
+            message = '#%s:%s' % (pos, linea)
+            print >>sys.stderr, 'enviando %s' % message
             sock.sendall(message)
-        linea=archivo.readline()
+            contador = contador + 1            
+            archivo.seek(contador)
+            linea=archivo.read(1)
  
     # Buscando respuesta
     amount_received = 0

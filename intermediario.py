@@ -53,14 +53,14 @@ while True:
  
         # Recibe los datos en trozos y reetransmite
         while True:
-            data = connection.recv(1000)
+            data = connection.recv(8)
             p = proba();
             if data:
-                print >>sys.stderr, 'recibido "%s"' % data
-                if !p:
+                print >>sys.stderr, 'recibido %s' % data
+                if ~p:
                     sock2.sendall(data)   
                     print 'Enviando mensaje al servidor'             
-                    data = sock2.recv(1000)
+                    data = sock2.recv(8)
                     if data:
                         connection.sendall(data)
                         print 'Enviando mensaje al cliente'
@@ -68,12 +68,6 @@ while True:
             else:
                 print >>sys.stderr, 'no hay mas datos', client_address
                 break
-
-    def perdido( ):
-       # retorna si un paquete se perdio.
-       sePerdio = True
-       p = random.uniform(0,100)
-   return sePerdio;
              
     finally:
         # Cerrando conexion

@@ -31,12 +31,12 @@ while True:
     connection, client_address = sock.accept()
  
     try:
-        print >>sys.stderr, 'concexion desde', client_address 
+        print >>sys.stderr, 'conexion desde', client_address 
  
         # Recibe los datos en trozos y reetransmite
         while True:
-            data = connection.recv(7)
-            print >>sys.stderr, 'recibido "%s"' % data
+            data = connection.recv(8)
+            print >>sys.stderr, 'recibido %s' % data
             pos = len(data)
             caracter = data[pos-1]
             archivo.write(caracter)
