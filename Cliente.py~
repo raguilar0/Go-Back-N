@@ -29,14 +29,16 @@ try:
     # Enviando datos
     archivo = open(nombreArchivo)
     linea = archivo.readline()
+    tamLinea = len(linea)
+    #for i in range (0, tamlinea)
+        
     while linea != '':
-        tamLinea = len(linea)
-        for i in range (0, tamLinea-1):
-            caracter = linea[i]
-            message = '#"%d":"%s"' % (i, caracter)
-            print >>sys.stderr, 'enviando "%s"' % message
-            sock.sendall(message)
+        print >>sys.stderr, 'enviando "%s"' % linea
         linea=archivo.readline()
+
+    #message = '#""'
+    print >>sys.stderr, 'enviando "%s"' % linea
+    sock.sendall(message)
  
     # Buscando respuesta
     amount_received = 0

@@ -20,6 +20,7 @@ modo = int(sys.argv[2])
 server_address = ('localhost', puertoServidor)
 print >>sys.stderr, 'empezando a levantar %s puerto %s' % server_address
 sock.bind(server_address)
+archivo = open('salida.txt', 'w')
 
 # Escuchando conexiones entrantes
 sock.listen(1)
@@ -30,12 +31,15 @@ while True:
     connection, client_address = sock.accept()
  
     try:
-        print >>sys.stderr, 'concexion desde', client_address
+        print >>sys.stderr, 'concexion desde', client_address 
  
         # Recibe los datos en trozos y reetransmite
         while True:
-            data = connection.recv(1000)
+            data = connection.recv(7)
             print >>sys.stderr, 'recibido "%s"' % data
+            pos = len(data)
+            caracter = data[pos-1]
+            archivo.write(caracter)
             if data:
                 print >>sys.stderr, 'enviando mensaje de vuelta al cliente'
                 connection.sendall(data)
@@ -46,3 +50,4 @@ while True:
     finally:
         # Cerrando conexion
         connection.close()
+        archivo.close()
