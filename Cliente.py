@@ -5,7 +5,7 @@
 # Fuente original de este codigo: www.pythondiario.com
 # Utilizado para fines academicos en el curso CI-1320 
 
-#Modificado por Alejandro Córdoba Soto 
+#Modificado por Alejandro Córdoba Soto y Ricardo Aguilar Vargas
 #Proyecto del curso CI-1320
 
 import socket
