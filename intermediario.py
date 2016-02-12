@@ -10,6 +10,7 @@
 
 import socket
 import sys
+import random
  
 # Creando el socket TCP/IP
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -31,6 +32,16 @@ modo= int(sys.argv[4])
 
 # Escuchando conexiones entrantes
 sock.listen(1)
+
+#Probabilidad de que se pierdan los paquetes
+def proba():
+   sePerdio = False
+   p = random.uniform(0,100)
+   if(p < perdida ):
+    sePerdio = True
+   return sePerdio;
+
+
  
 while True:
     # Esperando conexion
@@ -43,17 +54,26 @@ while True:
         # Recibe los datos en trozos y reetransmite
         while True:
             data = connection.recv(1000)
-            print >>sys.stderr, 'recibido "%s"' % data
+            p = proba();
             if data:
-                sock2.sendall(data)                
-                print >>sys.stderr, 'enviando mensaje de vuelta al cliente'
-                data = sock2.recv(1000)
-                if data:
-                    connection.sendall(data)
+                print >>sys.stderr, 'recibido "%s"' % data
+                if !p:
+                    sock2.sendall(data)   
+                    print 'Enviando mensaje al servidor'             
+                    data = sock2.recv(1000)
+                    if data:
+                        connection.sendall(data)
+                        print 'Enviando mensaje al cliente'
 
             else:
                 print >>sys.stderr, 'no hay mas datos', client_address
                 break
+
+    def perdido( ):
+       # retorna si un paquete se perdio.
+       sePerdio = True
+       p = random.uniform(0,100)
+   return sePerdio;
              
     finally:
         # Cerrando conexion
