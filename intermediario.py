@@ -53,14 +53,14 @@ while True:
  
         # Recibe los datos en trozos y reetransmite
         while True:
-            data = connection.recv(8)
+            data = connection.recv(7)
             p = proba();
             if data:
                 print >>sys.stderr, 'recibido %s' % data
                 if ~p:
                     sock2.sendall(data)   
                     print 'Enviando mensaje al servidor'             
-                    data = sock2.recv(8)
+                    data = sock2.recv(9)
                     if data:
                         connection.sendall(data)
                         print 'Enviando mensaje al cliente'

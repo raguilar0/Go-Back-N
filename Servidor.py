@@ -35,14 +35,16 @@ while True:
  
         # Recibe los datos en trozos y reetransmite
         while True:
-            data = connection.recv(8)
+            data = connection.recv(7)
             print >>sys.stderr, 'recibido %s' % data
             pos = len(data)
             caracter = data[pos-1]
+            seq = data[0:pos-2]
+            ack = seq+':ACK'
             archivo.write(caracter)
             if data:
-                print >>sys.stderr, 'enviando mensaje de vuelta al cliente'
-                connection.sendall(data)
+                print >>sys.stderr, 'enviando ACK al cliente'+ack
+                connection.sendall(ack)
             else:
                 print >>sys.stderr, 'no hay mas datos', client_address
                 break

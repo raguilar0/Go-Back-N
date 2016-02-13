@@ -46,7 +46,7 @@ try:
                 pos = '0'+pos
                 lenpos = len(pos)
             pba = int(pos)
-            message = '#%s:%s' % (pos, linea)
+            message = '%s:%s' % (pos, linea)
             print >>sys.stderr, 'enviando %s' % message
             sock.sendall(message)
             contador = contador + 1            
@@ -55,10 +55,10 @@ try:
  
     # Buscando respuesta
     amount_received = 0
-    amount_expected = letras*8
+    amount_expected = letras*9
      
     while amount_received < amount_expected:
-        data = sock.recv(8)
+        data = sock.recv(9)
         amount_received += len(data)
         print >>sys.stderr, 'recibiendo "%s"' % data
  
