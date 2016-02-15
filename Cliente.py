@@ -89,10 +89,10 @@ try:
  
     # Buscando respuesta
     amount_received = 0
-    amount_expected = letras*7
+    amount_expected = letras*9
      
     while amount_received < amount_expected:
-        data = sock.recv(7)
+        data = sock.recv(9)
         amount_received += len(data)
         print >>sys.stderr, 'recibiendo "%s"' % data
         ventanaInicio = ventanaInicio+1

@@ -1,26 +1,19 @@
-import random
-import sys
+import time
 
+#millis = int(round(time.time() * 1000))
 
-perdida = int(sys.argv[1])
+t0 = time.time()
 
-def proba():
-   sePerdio = False
-   p = random.uniform(0,100)
-   if(p < perdida ):
-   	sePerdio = True
-   return sePerdio;
+print 'Tiempo 1 ',t0
 
-contador = 0
-contadorPerdidos = 0;
+t1 = time.time()
+dif = t1-t0
 
-while (contador < 100 ):
-	p = proba();
-	print 'Probabilidad ', p
-	if(p):
-		print 'El paquete se perdio'
-		contadorPerdidos = contadorPerdidos +1
-	contador = contador + 1
+while dif*1000 < 1000:
 
-print 'Total de perdidos ', contadorPerdidos
+	print 'dif ', dif
+	dif = t1-t0
+	t1 = time.time()
+print 'Diferencia ',dif
+
 
