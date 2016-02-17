@@ -22,7 +22,6 @@ print >>sys.stderr, 'empezando a levantar %s puerto %s' % server_address
 sock.bind(server_address)
 archivo = open('salida.txt', 'w')
 ultimoAckEnviado = -1
-lista_de recibidos
 
 # Escuchando conexiones entrantes
 sock.listen(1)
@@ -31,7 +30,7 @@ while True:
     # Esperando conexion
     print >>sys.stderr, 'Esperando para conectarse'
     connection, client_address = sock.accept()
- 
+
     try:
         print >>sys.stderr, 'conexion desde', client_address 
  
@@ -42,13 +41,13 @@ while True:
             pos = len(data)
             caracter = data[pos-1]
             seq = data[0:pos-2]
-            ack = seq+':ACK'
+            ack = seq+':'+caracter
             archivo.write(caracter)
             if data:
-                if ultimoAckEnviado == seq - 1:
+                if (ultimoAckEnviado == (int(seq)-1)):
                     print >>sys.stderr, 'enviando ACK al cliente'+ack
                     connection.sendall(ack)
-                else:
+                    ultimoAckEnviado = int(seq)
 
             else:
                 print >>sys.stderr, 'no hay mas datos', client_address
