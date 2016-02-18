@@ -10,6 +10,7 @@
 
 import socket
 import sys
+import time
 from subprocess import check_output
 
  
@@ -26,6 +27,9 @@ ventanaInicio = 0
 ventanaFinal = 0
 archivo = open(nombreArchivo)
 contador = 0
+contadorACK = 0
+lista_ack_recibidos = []
+lista_tiempos = []
 server_address = ('localhost', puertoCliente)
 print >>sys.stderr, 'conectando a %s puerto %s' % server_address
 sock.connect(server_address)
@@ -40,7 +44,7 @@ def enviarMensajesIniciales(mContador, vf):
     archivo.seek(mContador)
     mLinea = archivo.read(1)
     while ((mLinea != '') & (mContador < vf)):
-        
+
         for i in range (ventanaInicio, ventanaFinal):
             pos = str(mContador)
             lenpos = len(pos)
@@ -51,6 +55,7 @@ def enviarMensajesIniciales(mContador, vf):
             message = '%s:%s' % (pos, mLinea)
             print >>sys.stderr, 'enviando %s' % message
             sock.sendall(message)
+            lista_tiempos[mContador%ventana] = int(time.time())
             mContador = mContador + 1            
             archivo.seek(mContador)
             contador = mContador
@@ -71,6 +76,7 @@ def enviarSiguienteMensaje(mContador, vf):
         message = '%s:%s' % (pos, mLinea)
         print >>sys.stderr, 'enviando %s' % message
         sock.sendall(message)
+        lista_tiempo[mContador%ventana] = time.time()
         mContador = mContador + 1            
         archivo.seek(mContador)
         contador = mContador
@@ -92,6 +98,8 @@ try:
     amount_expected = letras*7
      
     while amount_received < amount_expected:
+        t = lista_tiempo[contadorACK%ventana]
+            
         data = sock.recv(7)
         amount_received += len(data)
         print >>sys.stderr, 'recibiendo "%s"' % data

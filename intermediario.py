@@ -56,8 +56,6 @@ def worker(data):
     else:
         p = False
         print 'SE PIERDE EL MENSAJE ',data
-
-
     
     if p:
         print 'Enviando mensaje al servidor ',data
